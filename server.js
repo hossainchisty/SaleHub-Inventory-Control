@@ -1,21 +1,25 @@
 // 👤 Import Express and other required modules
-const express = require('express');
-const dotenv = require('dotenv');
+const express = require("express");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
-// 📮 Database connection with mongoose
+// 🔌 Connect to database
 const connectDB = require("./src/infrastructure/configs/db.config");
 connectDB();
 
-const userRouter = require('./src/application/routers/userRouter');
+const userRouter = require("./src/application/routers/userRouter");
+const productRouter = require("./src/application/routers/productRouter");
 
 // 💡 Create Express app instance
 const app = express();
 
+//  ⚙ｍ Middlewares
+app.use(express.json());
 
-// User router
-app.use('/api/v1/users', userRouter);
+// 🚀 Bind router to server
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/products", productRouter);
 
 // 💡 Start the server
 const port = process.env.PORT;

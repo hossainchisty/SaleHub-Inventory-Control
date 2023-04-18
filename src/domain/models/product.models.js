@@ -1,10 +1,9 @@
-const mongoose = required( "mongoose");
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
     productId: {
       type: String,
-      required: true,
       unique: true,
     },
     name: {
@@ -25,6 +24,12 @@ const productSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
+
+productSchema.pre("save", function (next) {
+  const product = this;
+  product.productId = "PROD-" + Math.floor(Math.random() * 10000);
+  next();
+});
 
 const Product = mongoose.model("Product", productSchema);
 
